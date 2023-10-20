@@ -37,3 +37,7 @@ const dbConnect = async () => {
     }
 }
 dbConnect()
+const productsCollection = client.db('productDB').collection('products');
+app.get('/', (req, res) => {
+    res.send('running');
+})
