@@ -41,3 +41,10 @@ const productsCollection = client.db('productDB').collection('products');
 app.get('/', (req, res) => {
     res.send('running');
 })
+
+
+app.get('/products',async(req,res)=>{
+    const cursor =productsCollection.find();
+    const result =await cursor.toArray();
+    res.send(result);
+})
