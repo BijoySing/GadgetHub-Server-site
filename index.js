@@ -37,17 +37,35 @@ const dbConnect = async () => {
     }
 }
 dbConnect()
+
 const productsCollection = client.db('productDB').collection('products');
+
+
+
 app.get('/', (req, res) => {
     res.send('running');
 })
-
 
 app.get('/products',async(req,res)=>{
     const cursor =productsCollection.find();
     const result =await cursor.toArray();
     res.send(result);
 })
+
+// app.get('/products/:id', async (req, res) => {
+//     const id = req.params.id;
+//     const query = { _id: new ObjectId(id) }
+//     const result = await productsCollection.findOne(query);
+//     res.send(result);
+// })
+
+// app.get('/products/:id',async(req,res)=>{
+//     const id =req.params.id;
+//     const query ={_id: new ObjectId(id)}
+//     const result = await productsCollection.findOne(query);
+//     res.send(result)
+// })
+
 
 
 app.post('/products', async (req, res) => {
@@ -59,6 +77,14 @@ app.post('/products', async (req, res) => {
 
 
 })
+// Send a ping to confirm a successful connectio
+
+
+
+
+
+
+
 
 app.listen(port, () => {
     console.log(`running port:${port}`)
