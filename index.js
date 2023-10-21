@@ -4,7 +4,7 @@ require('dotenv').config();
 const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 5000;
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 
 
@@ -76,6 +76,16 @@ app.post('/products', async (req, res) => {
 
 
 
+
+
+
+
+
+
+
+    
+
+
 })
 // Send a ping to confirm a successful connectio
 
@@ -83,6 +93,28 @@ app.post('/products', async (req, res) => {
 
 
 
+app.put('/products/:id', async (req, res) => {
+    const id = req.params.id;
+    console.log(id);
+    const filter = { _id: new ObjectId(id) }
+    const options = { upsert: true };
+    const UpdateProduct = req.body;
+console.log(UpdateProduct);
+    const Product = {
+        $set: {
+            name: UpdateProduct.name,
+            brandName: UpdateProduct.brandName,
+            productType: UpdateProduct.productType,
+            price: UpdateProduct.price,
+            shortDescription: UpdateProduct.shortDescription,
+            rating: UpdateProduct.rating,
+            image: UpdateProduct.image
+        }
+    }
+
+    const result = await productsCollection.updateOne(filter, Product, options);
+    res.send(result);
+})
 
 
 
